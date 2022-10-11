@@ -1,0 +1,40 @@
+        /// <summary>
+        /// This Fuctions To Return One Record Form Entity 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>One Record</returns>
+
+  [HttpGet("{id}", Name = "GetOneSrvAllSideCode")]
+  public ActionResult<SrvAllSideEntity> Get(string id)
+  {
+     var code = _db.SrvAllSides.Find(Convert.ToDecimal(id));
+       if (code == null)
+          throw new AppException("السجل غير موجود")
+
+           return Ok(code);
+  }
+
+
+//In Client Api
+
+//in interface
+  Task<SrvAllSide> getOne(string id); 
+
+ //in class
+        /// <summary>
+        /// This Fuctions To Get One Record Form SERVER 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>One Record</returns>
+
+public async Task<SrvAllSide> getOne(string id)
+{
+  return await _httpService.Get<SrvAllSide>(apiUrl + "/" + id);
+}
+
+//In Page
+protected SrvAllSide ObjectAllside;
+protected  async Task GetOne(string id)
+ {
+       ObjectAllside = await ISApi.SrvAllSideApi.getOne(id);
+ }
